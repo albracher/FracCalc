@@ -65,18 +65,18 @@ public class FracCalc {
         String firstOperandNumerator = "0";
         String firstOperandDenominator = "1";
 
-        //If second operand is a mixed number
+        //If first operand is a mixed number
         if (firstOperand.contains("_") && (firstOperand.contains("/"))) {
             firstOperandWhole = firstOperand.substring(0, indexOfUnderscore);
             firstOperandNumerator = firstOperand.substring(indexOfUnderscore + 1, indexOfSlash);
             firstOperandDenominator = firstOperand.substring(indexOfSlash + 1);
 
-            // if second operand is fraction
+            // if first operand is improper fraction
         } else if (!firstOperand.contains("_") && (firstOperand.contains("/"))) {
             firstOperandNumerator = firstOperand.substring(0, indexOfSlash);
             firstOperandDenominator = firstOperand.substring(indexOfSlash + 1);
 
-            // if second operand is whole number
+            // if first operand is whole number
         } else if (!firstOperand.contains("_") && (!firstOperand.contains("/"))) {
             firstOperandWhole = firstOperand;
         }
@@ -122,28 +122,35 @@ public class FracCalc {
 
 
         //convert everything into an improper fraction
-        //What if operands are whole numbers? Then numerator = 0 and denominator = 1
-        if ((firstOperandNumeratorInt == 0 && (firstOperandDenominatorInt == 1))) {
-            firstOperandNumeratorInt = firstOperandWholeInt;
-            firstOperandDenominatorInt = 1;
-        }
-        if ((secondOperandNumeratorInt == 0 && (secondOperandDenominatorInt == 1))) {
-            secondOperandNumeratorInt = secondOperandWholeInt;
-            secondOperandDenominatorInt = 1;
-        } //now what if first and second operands are already improper fractions? Whole will = 0
-        else if (firstOperandWholeInt == 0) {
-            firstOperandNumeratorInt = firstOperandNumeratorInt;
-            firstOperandDenominatorInt = firstOperandDenominatorInt;
-        } else if (secondOperandWholeInt == 0) {
-            secondOperandNumeratorInt = secondOperandNumeratorInt;
-            secondOperandDenominatorInt = secondOperandDenominatorInt;
-            //now check to see if it's a mixed number
-        } else if ((firstOperandWholeInt != 0) && (firstOperandNumeratorInt != 0) && (firstOperandDenominatorInt != 0)) {
+        //If first operand is a mixed fraction
+        if (firstOperand.contains("_") && (firstOperand.contains("/"))) {
             firstOperandNumeratorInt = (firstOperandDenominatorInt * firstOperandWholeInt) + firstOperandNumeratorInt;
             firstOperandDenominatorInt = firstOperandDenominatorInt;
-        } else if ((secondOperandWholeInt != 0) && (secondOperandNumeratorInt != 0) && (secondOperandDenominatorInt != 0)) {
+
+            // if first operand is improper fraction
+        } else if (!firstOperand.contains("_") && (firstOperand.contains("/"))) {
+            firstOperandNumeratorInt = firstOperandNumeratorInt;
+            firstOperandDenominatorInt = firstOperandDenominatorInt;
+
+            // if first operand is whole number
+        } else if (!firstOperand.contains("_") && (!firstOperand.contains("/"))) {
+            firstOperandNumeratorInt = firstOperandWholeInt;
+            firstOperandDenominatorInt = 1;
+
+        } //if second operand is a mixed fraction
+        if (secondOperand.contains("_") && (secondOperand.contains("/"))) {
             secondOperandNumeratorInt = (secondOperandDenominatorInt * secondOperandWholeInt) + secondOperandNumeratorInt;
             secondOperandDenominatorInt = secondOperandDenominatorInt;
+
+            // if second operand is an improper fraction
+        } else if (!secondOperand.contains("_") && (secondOperand.contains("/"))) {
+            secondOperandNumeratorInt = secondOperandNumeratorInt;
+            secondOperandDenominatorInt = secondOperandDenominatorInt;
+
+            // if second operand is whole number
+        } else if (!secondOperand.contains("_") && (!secondOperand.contains("/"))) {
+            secondOperandNumeratorInt = secondOperandWholeInt;
+            secondOperandDenominatorInt = 1;
         }
 
         System.out.println("firstOperandWholeInt = " + firstOperandWholeInt);

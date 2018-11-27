@@ -151,6 +151,14 @@ public class FracCalc {
         } else if (!secondOperand.contains("_") && (!secondOperand.contains("/"))) {
             secondOperandNumeratorInt = secondOperandWholeInt;
             secondOperandDenominatorInt = 1;
+
+            //what if operand is 0?
+        } if (secondOperand.equals("0")) {
+            secondOperandDenominatorInt = 0;
+            secondOperandNumeratorInt = 0;
+        } if (firstOperand.equals("0")) {
+            firstOperandNumeratorInt = 0;
+            firstOperandDenominatorInt = 0;
         }
 
         System.out.println("firstOperandWholeInt = " + firstOperandWholeInt);

@@ -123,10 +123,14 @@ public class FracCalc {
 
         //convert everything into an improper fraction
         //If first operand is a mixed fraction
-        if (firstOperand.contains("_") && (firstOperand.contains("/"))) {
+        if (firstOperand.contains("_") && (firstOperand.contains("/")) && (!firstOperand.contains("-"))) {
             firstOperandNumeratorInt = (firstOperandDenominatorInt * firstOperandWholeInt) + firstOperandNumeratorInt;
             firstOperandDenominatorInt = firstOperandDenominatorInt;
 
+            //if first operand is negative mixed fraction
+        } else if (firstOperand.contains("_") && (firstOperand.contains("/")) && (firstOperand.contains("-"))) {
+            firstOperandNumeratorInt = ((firstOperandDenominatorInt * Math.abs(firstOperandWholeInt)) + firstOperandNumeratorInt) * -1;
+            firstOperandDenominatorInt = firstOperandDenominatorInt;
             // if first operand is improper fraction
         } else if (!firstOperand.contains("_") && (firstOperand.contains("/"))) {
             firstOperandNumeratorInt = firstOperandNumeratorInt;
@@ -137,12 +141,20 @@ public class FracCalc {
             firstOperandNumeratorInt = firstOperandWholeInt;
             firstOperandDenominatorInt = 1;
 
+
+            // parse second operand
+
         } //if second operand is a mixed fraction
-        if (secondOperand.contains("_") && (secondOperand.contains("/"))) {
+        if (secondOperand.contains("_") && (secondOperand.contains("/")) && (!secondOperand.contains("-"))) {
             secondOperandNumeratorInt = (secondOperandDenominatorInt * secondOperandWholeInt) + secondOperandNumeratorInt;
             secondOperandDenominatorInt = secondOperandDenominatorInt;
 
-            // if second operand is an improper fraction
+            //if second operand is negative mixed fraction
+        } else if (secondOperand.contains("_") && (secondOperand.contains("/")) && (secondOperand.contains("-"))) {
+            secondOperandNumeratorInt = ((secondOperandDenominatorInt * Math.abs(secondOperandWholeInt)) + secondOperandNumeratorInt) * -1;
+            secondOperandDenominatorInt = secondOperandDenominatorInt;
+
+            //if second operand is an improper fraction
         } else if (!secondOperand.contains("_") && (secondOperand.contains("/"))) {
             secondOperandNumeratorInt = secondOperandNumeratorInt;
             secondOperandDenominatorInt = secondOperandDenominatorInt;
@@ -153,18 +165,10 @@ public class FracCalc {
             secondOperandDenominatorInt = 1;
 
             //what if operand is 0?
-        } if (secondOperand.equals("0")) {
-            secondOperandDenominatorInt = 0;
-            secondOperandNumeratorInt = 0;
-        } if (firstOperand.equals("0")) {
-            firstOperandNumeratorInt = 0;
-            firstOperandDenominatorInt = 0;
         }
 
-        System.out.println("firstOperandWholeInt = " + firstOperandWholeInt);
         System.out.println("firstOperandNumeratorInt = " + firstOperandNumeratorInt);
         System.out.println("firstOperandDenominatorInt = " + firstOperandDenominatorInt);
-        System.out.println("secondOperandWholeInt = " + secondOperandWholeInt);
         System.out.println("secondOperandNumeratorInt = " + secondOperandNumeratorInt);
         System.out.println("secondOperandDenominatorInt = " + secondOperandDenominatorInt);
 

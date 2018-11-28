@@ -54,6 +54,8 @@ public class FracCalc {
         // the second operand will always be 3 spaces after the first space to the end
         // of the String
         // same idea
+        //what sign is it?
+        String processingOperator = input.substring(spaceIndex + 1, spaceIndex + 2);
 
 
         //Indexes of Underscore, Slash for firstOperand
@@ -163,8 +165,6 @@ public class FracCalc {
         } else if (!secondOperand.contains("_") && (!secondOperand.contains("/"))) {
             secondOperandNumeratorInt = secondOperandWholeInt;
             secondOperandDenominatorInt = 1;
-
-            //what if operand is 0?
         }
 
         System.out.println("firstOperandNumeratorInt = " + firstOperandNumeratorInt);
@@ -176,13 +176,13 @@ public class FracCalc {
         int Lower = 0;
         //Begin addition/subtraction/division/multiplication
         //is it addition?
-        if (input.contains("+")) {
+        if (processingOperator.equals("+")) {
             //ad - bc
             Upper = (firstOperandNumeratorInt * secondOperandDenominatorInt) + (secondOperandNumeratorInt * firstOperandDenominatorInt);
             //bd
             Lower = (firstOperandDenominatorInt * secondOperandDenominatorInt);
             //or is it subtraction?
-        } else if (input.contains("-")) {
+        } else if (processingOperator.equals("-")) {
             //ad - bc
             //convert using new values
             Upper = (firstOperandNumeratorInt * secondOperandDenominatorInt) - (secondOperandNumeratorInt * firstOperandDenominatorInt);
@@ -190,13 +190,13 @@ public class FracCalc {
             //convert using new values
             Lower = (firstOperandDenominatorInt * secondOperandDenominatorInt);
             //or is it multiplication?
-        } else if (input.contains("*")) {
+        } else if (processingOperator.equals("*")) {
             //convert using new values
             Upper = (firstOperandNumeratorInt * secondOperandNumeratorInt);
             Lower = (firstOperandDenominatorInt * secondOperandDenominatorInt);
             //or is it division?
             //convert using newer values
-        } else {
+        } else if (processingOperator.equals("/")){
             Upper = firstOperandNumeratorInt * secondOperandDenominatorInt;
             Lower = firstOperandDenominatorInt * secondOperandNumeratorInt;
         }

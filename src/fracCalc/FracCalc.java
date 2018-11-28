@@ -115,14 +115,6 @@ public class FracCalc {
         int secondOperandNumeratorInt = Integer.parseInt(secondOperandNumerator); //c
         int secondOperandDenominatorInt = Integer.parseInt(secondOperandDenominator); //d
 
-        System.out.println("Before converting: firstOperandWholeInt = " + firstOperandWholeInt);
-        System.out.println("Before converting: firstOperandNumeratorInt = " + firstOperandNumeratorInt);
-        System.out.println("Before converting: firstOperandDenominatorInt = " + firstOperandDenominatorInt);
-        System.out.println("Before converting: secondOperandWholeInt = " + secondOperandWholeInt);
-        System.out.println("Before converting: secondOperandNumeratorInt = " + secondOperandNumeratorInt);
-        System.out.println("Before converting: secondOperandDenominatorInt = " + secondOperandDenominatorInt);
-
-
         //convert everything into an improper fraction
         //If first operand is a mixed fraction
         if (firstOperand.contains("_") && (firstOperand.contains("/")) && (!firstOperand.contains("-"))) {
@@ -167,11 +159,6 @@ public class FracCalc {
             secondOperandDenominatorInt = 1;
         }
 
-        System.out.println("firstOperandNumeratorInt = " + firstOperandNumeratorInt);
-        System.out.println("firstOperandDenominatorInt = " + firstOperandDenominatorInt);
-        System.out.println("secondOperandNumeratorInt = " + secondOperandNumeratorInt);
-        System.out.println("secondOperandDenominatorInt = " + secondOperandDenominatorInt);
-
         int Upper = 0;
         int Lower = 0;
         //Begin addition/subtraction/division/multiplication
@@ -196,22 +183,68 @@ public class FracCalc {
             Lower = (firstOperandDenominatorInt * secondOperandDenominatorInt);
             //or is it division?
             //convert using newer values
-        } else if (processingOperator.equals("/")){
+        } else if (processingOperator.equals("/")) {
             Upper = firstOperandNumeratorInt * secondOperandDenominatorInt;
             Lower = firstOperandDenominatorInt * secondOperandNumeratorInt;
         }
         System.out.println("Upper = " + Upper);
         System.out.println("Lower = " + Lower);
 
+        //FINAL - SIMPLIFICATION STARTS HERE
 
-        // return whatever the result is by the end
-        String firstOperandString = "First operand will be: " + "whole:" + firstOperandWhole + " numerator:" + firstOperandNumerator + " denominator:"
-                + firstOperandDenominator;
-        String secondOperandString = "Second operand will be: " + "whole:" + secondOperandWhole + " numerator:" + secondOperandNumerator + " denominator:"
-                + secondOperandDenominator;
+        //use GCD method to find the greatest common divisor - way below
+        int actualGCD = Math.abs(gcd(Lower, Upper));
 
-        return (Upper + "/" + Lower);
+        //Things start to get simplified here: this is where you output final thing
+        //FinalReducedFraction is what will be printed out at the end.
+        String FinalReducedFraction = "blah";
+        //primed
+        int finalWhole = 0;
 
+        //Divide the numerator and denominator by the Greatest Common Denominator
+        int finalNumerator = Upper / actualGCD;
+        int finalDenominator = Lower / actualGCD;
+
+        //Debugging: what is it seeing the final numerator, denominator, and whole as beforehand? Also, what is the GCD?
+        System.out.println("actualGCD = " + actualGCD);
+        System.out.println("Before processing: finalWhole = " + finalWhole);
+        System.out.println("Before processing: finalNumerator = " + finalNumerator);
+        System.out.println("Before processing: finalDenominator = " + finalDenominator);
+
+        //This is where we test if the simplified fraction can be turned into a mixed number or not
+
+        //if the actual GCD = 1, and the denominator of the fraction is 1, or the final numerator is 0, then the whole number will be printed
+        if (((actualGCD == 1 && Lower == 1) || (finalNumerator == 0))) {
+            finalWhole = Upper;
+            FinalReducedFraction = "" + Upper;
+            //If the absolute value of the final numerator is greater than the absolute value of the denominator, then the finalWhole = the numerator / denominator
+        } else if (Math.abs(finalNumerator) > Math.abs(finalDenominator)) {
+            finalWhole = (finalNumerator) / (finalDenominator);
+            finalNumerator = Math.abs(finalNumerator) % Math.abs(finalDenominator);
+            FinalReducedFraction = (finalWhole + "_" + finalNumerator + "/" + finalDenominator);
+            //if FinalDenominator == 1 or -1, then only the final Numerator will be printed out
+        } else if (finalDenominator == 1 || finalDenominator == -1) {
+            FinalReducedFraction = "" + (finalNumerator);
+        } else if (Math.abs(finalNumerator) < Math.abs(finalDenominator)) {
+            FinalReducedFraction = (finalNumerator + "/" + finalDenominator);
+        }
+
+
+        System.out.println("After processing: finalWhole = " + finalWhole);
+        System.out.println("After processing: finalNumerator = " + finalNumerator);
+        System.out.println("After processing: finalDenominator = " + finalDenominator);
+
+        //return (Upper + "/" + Lower);
+
+        return FinalReducedFraction;
+    }
+
+    public static int gcd(int num1, int num2) {
+        if (num2 == 0) {
+            return num1;
+        } else {
+            return gcd(num2, num1 % num2);
+        }
     }
 
 }

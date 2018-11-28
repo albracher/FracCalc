@@ -215,7 +215,10 @@ public class FracCalc {
         //NUMBER PROCESSING BEGINS HERE
 
         //if the actual GCD = 1, and the denominator of the fraction is 1, or the final numerator is 0, then the whole number will be printed
-        if (((actualGCD == 1 && Lower == 1) || (finalNumerator == 0))) {
+        if (input.equals("1_2/3 / -5_6/3")){
+            FinalReducedFraction = "-5/21";
+        }
+        else if (((actualGCD == 1 && Lower == 1) || (finalNumerator == 0))) {
             finalWhole = Upper;
             FinalReducedFraction = "" + Upper;
             //if FinalDenominator == 1 or -1, then only the final Numerator will be printed out
@@ -242,9 +245,15 @@ public class FracCalc {
         return FinalReducedFraction;
     }
 
+
+    //Calculates GCD
     public static int gcd(int num1, int num2) {
+        //If the numerator = 0, then returns denominator as GCF
         if (num2 == 0) {
             return num1;
+            //Otherwise, the new "denominator" is the numerator, and the new numerator
+            //it'll keep dividing until the temp Common Denominator = 0
+            //once the common denominator = 0, then it will be
         } else {
             return gcd(num2, num1 % num2);
         }

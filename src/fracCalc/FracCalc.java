@@ -212,22 +212,26 @@ public class FracCalc {
         System.out.println("Before processing: finalDenominator = " + finalDenominator);
 
         //This is where we test if the simplified fraction can be turned into a mixed number or not
+        //NUMBER PROCESSING BEGINS HERE
 
         //if the actual GCD = 1, and the denominator of the fraction is 1, or the final numerator is 0, then the whole number will be printed
         if (((actualGCD == 1 && Lower == 1) || (finalNumerator == 0))) {
             finalWhole = Upper;
             FinalReducedFraction = "" + Upper;
+            //if FinalDenominator == 1 or -1, then only the final Numerator will be printed out
+        } else if (finalDenominator == 1 || finalDenominator == -1) {
+            FinalReducedFraction = "" + (finalNumerator/finalDenominator);
             //If the absolute value of the final numerator is greater than the absolute value of the denominator, then the finalWhole = the numerator / denominator
         } else if (Math.abs(finalNumerator) > Math.abs(finalDenominator)) {
             finalWhole = (finalNumerator) / (finalDenominator);
             finalNumerator = Math.abs(finalNumerator) % Math.abs(finalDenominator);
+            finalDenominator = Math.abs(finalDenominator);
             FinalReducedFraction = (finalWhole + "_" + finalNumerator + "/" + finalDenominator);
-            //if FinalDenominator == 1 or -1, then only the final Numerator will be printed out
-        } else if (finalDenominator == 1 || finalDenominator == -1) {
-            FinalReducedFraction = "" + (finalNumerator);
+            //if the absolute value of the Numerator is less than the absolute value of the Denominator, then that means that it's already in perfect form
         } else if (Math.abs(finalNumerator) < Math.abs(finalDenominator)) {
             FinalReducedFraction = (finalNumerator + "/" + finalDenominator);
         }
+        //NUMBER PROCESSING ENDS HERE
 
 
         System.out.println("After processing: finalWhole = " + finalWhole);
@@ -235,7 +239,6 @@ public class FracCalc {
         System.out.println("After processing: finalDenominator = " + finalDenominator);
 
         //return (Upper + "/" + Lower);
-
         return FinalReducedFraction;
     }
 
